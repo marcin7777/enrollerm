@@ -65,16 +65,19 @@ public class ParticipantRestController {
 	 @RequestMapping(value = " ", method = RequestMethod.PUT)
 		public ResponseEntity<?> updateParticipant(@PathVariable("id") String login, 
 		 @RequestBody Participant updatedParticipant) { 
-		    Participant participant = participantService.findByLogin(login);
-		if (participant == null) { 
+		    Participant foundParticipant = participantService.findByLogin(login);
+		if (foundParticipant == null) { 
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 		} 
-		
-		participantService.delete(participant);
-		return new ResponseEntity<Participant>(participant, HttpStatus.OK);
+		//ustawiamy odpowiednie dane - te które aktualizujemy
+		foundParticipant.setPassword(updatedParticipant.getPassword());
+		//potem zapis do bazy danych
+		participantService.update(foundParticipant);
+		return new ResponseEntity<Participant>(foundParticipant, HttpStatus.OK);
 		
 	 }
 	 
 	// GET, DELETE - localhost:8080/participants + BODY
+	 //POST - localhost:8080/participants + BODY
 	// PUT - localhost:8080/participants/id + BODY
 }

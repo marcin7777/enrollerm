@@ -49,10 +49,11 @@ public class ParticipantService {
 		transaction.commit();		
 	}
 	
-	public void update(Participant participant) {
+	public Participant update(Participant participant) {
 		Transaction transaction = this.session.beginTransaction();
 		session.update(participant);
 		transaction.commit();
+		return participant;
 	}
 	
 
