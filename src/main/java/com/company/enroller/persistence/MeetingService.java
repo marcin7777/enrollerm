@@ -37,5 +37,51 @@ public class MeetingService {
 		transaction.commit();
 		return meeting;
 	}
+	
+	
+	public boolean presentParticipant(String login) {
+		return !(session.get(Participant.class, login) != null);
+	}
+	
+
+	public void addParticipantToTheMeeting(Meeting meeting) {
+		Transaction transaction = session.beginTransaction();
+		session.save(meeting);
+		transaction.commit();
+	}
+	
+	public Participant findParticipantByLoginInMeeting(long id, String login) {
+		Collection<Participant> participants = ((Meeting) session.get(Meeting.class, id)).getParticipants();
+		for (Participant participant : participants) {
+			if (participant.getLogin().equals(login)) {
+				return participant;
+			}
+		}
+		session.get(Meeting.class, id);
+		return null;
+	}
+	
+	public Collection<Participant> getAllParticipants(long id) {
+		return ((Meeting) session.get(Meeting.class, id)).getParticipants();
+	}
+	
+	public void deleteMeeting(Meeting meeting) {
+		Transaction transaction = session.beginTransaction();
+		session.delete(meeting);
+		transaction.commit();
+	}
+	
+	public void update(Meeting meeting) {
+		Transaction transaction = session.beginTransaction();
+		session.merge(meeting);
+		transaction.commit();
+	}
+
+	public void deleteParticipantFromMeeting(Meeting meeting) {
+		Transaction transaction = session.beginTransaction();
+		session.save(meeting);
+		transaction.commit();
+		
+	}
 
 }

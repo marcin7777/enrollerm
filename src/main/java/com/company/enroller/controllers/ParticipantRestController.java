@@ -31,7 +31,7 @@ public class ParticipantRestController {
 	public ResponseEntity<?> getParticipant(@PathVariable("id") String login) {
 	    Participant participant = participantService.findByLogin(login);
 	if (participant == null) { 
-	return new ResponseEntity(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<String>("No participants with such a login", HttpStatus.NOT_FOUND);
 	} 
 
 	return new ResponseEntity<Participant>(participant, HttpStatus.OK); 
@@ -67,7 +67,7 @@ public class ParticipantRestController {
 		 @RequestBody Participant updatedParticipant) { 
 		    Participant foundParticipant = participantService.findByLogin(login);
 		if (foundParticipant == null) { 
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} 
 		//ustawiamy odpowiednie dane - te które aktualizujemy
 		foundParticipant.setPassword(updatedParticipant.getPassword());

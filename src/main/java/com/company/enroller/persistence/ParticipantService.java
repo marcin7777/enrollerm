@@ -1,8 +1,6 @@
 package com.company.enroller.persistence;
 
-import java.util.ArrayList;
 import java.util.Collection;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
